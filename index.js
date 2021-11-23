@@ -1,5 +1,7 @@
 import mqtt from 'mqtt';
 
+const topic = `openflowx/${ process.env.EVENT_NAME || "root" }`;
+
 var client = mqtt.connect('mqtt://rabbitmq-service:1883',{clientId:'mqttjs01'});
 client.on("connect", (c) => {
   console.log('connected')
@@ -12,6 +14,6 @@ client.on("close", (e) => { console.log("closed") });
 setInterval( () => {
   if ( client.connected == true ) {
     console.log("Sending root");
-    client.publish("openflowx/root", JSON.stringify({key: 'value'}));
+    client.publish(topic, JSON.stringify({key: 'value', time: new Date()}));
   }
 }, 1000 );
