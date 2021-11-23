@@ -3,6 +3,7 @@ import mqtt from 'mqtt';
 var client = mqtt.connect('mqtt://rabbitmq-service:1883',{clientId:'mqttjs01'});
 client.on("connect", (c) => {
   console.log('connected')
+  console.log(JSON.stringify(c))
   if ( c.clean ) {
     console.log("Sending testtopic");
     client.publish("testtopic", "test message")
